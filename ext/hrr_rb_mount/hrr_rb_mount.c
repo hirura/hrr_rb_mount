@@ -22,7 +22,7 @@ VALUE rb_mHrrRbMountConst;
 VALUE
 hrr_rb_mount_mount(int argc, VALUE *argv, VALUE self)
 {
-  char *source, *target, *filesystemtype, *data;
+  const char *source, *target, *filesystemtype, *data;
   unsigned long mountflags;
 
   rb_check_arity(argc, 3, 5);
@@ -54,8 +54,8 @@ hrr_rb_mount_mount(int argc, VALUE *argv, VALUE self)
 VALUE
 hrr_rb_mount_umount(int argc, VALUE *argv, VALUE self)
 {
-  char *target;
-  int  flags;
+  const char *target;
+  int flags;
 
   rb_check_arity(argc, 1, 2);
 
