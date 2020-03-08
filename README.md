@@ -1,8 +1,18 @@
 # HrrRbMount
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/hrr_rb_mount`. To experiment with that code, run `bin/console` for an interactive prompt.
+[![Build Status](https://travis-ci.com/hirura/hrr_rb_mount.svg?branch=master)](https://travis-ci.com/hirura/hrr_rb_mount)
+[![Gem Version](https://badge.fury.io/rb/hrr_rb_mount.svg)](https://badge.fury.io/rb/hrr_rb_mount)
 
-TODO: Delete this and the text above, and describe your gem
+hrr_rb_mount is a wrapper around mount and umount for CRuby.
+
+## Table of Contents
+
+- [Installation](#installation)
+- [Usage](#usage)
+- [Development](#development)
+- [Contributing](#contributing)
+- [License](#license)
+- [Code of Conduct](#code-of-conduct)
 
 ## Installation
 
@@ -22,7 +32,14 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+The basic usage is as follows.
+
+```ruby
+require "hrr_rb_mount"
+
+HrrRbMount.mount "tmpfs", "/path/to/target", "tmpfs", HrrRbMount::NOEXEC, "size=1M" # => 0
+HrrRbMount.umount "/path/to/target"                                                 # => 0
+```
 
 ## Development
 
@@ -32,7 +49,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/hrr_rb_mount. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/[USERNAME]/hrr_rb_mount/blob/master/CODE_OF_CONDUCT.md).
+Bug reports and pull requests are welcome on GitHub at https://github.com/hirura/hrr_rb_mount. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/hirura/hrr_rb_mount/blob/master/CODE_OF_CONDUCT.md).
 
 
 ## License
@@ -41,4 +58,4 @@ The gem is available as open source under the terms of the [MIT License](https:/
 
 ## Code of Conduct
 
-Everyone interacting in the HrrRbMount project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/hrr_rb_mount/blob/master/CODE_OF_CONDUCT.md).
+Everyone interacting in the HrrRbMount project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/hirura/hrr_rb_mount/blob/master/CODE_OF_CONDUCT.md).
