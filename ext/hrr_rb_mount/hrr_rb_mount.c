@@ -15,7 +15,7 @@ VALUE rb_mHrrRbMountConst;
  *   @param target [String] The location (a directory or file) specified by the pathname.
  *   @param filesystemtype [String] The filesystem type, which is supported by the kernel.
  *   @param mountflags [Integer] The mount operation is performed depending on the bits specified in the mountflags.
- *   @param data [Array] Per filesystem options.
+ *   @param data [String] Per filesystem options.
  *   @return [Integer] 0.
  *   @raise [Errno::EXXX] A SystemCallError is raised when the operation failed.
  */
