@@ -150,8 +150,8 @@ RSpec.describe HrrRbMount do
       @tmpdir9  = @tmpdir6 + "link"
       @tmpdir10 = @tmpdir7 + "link"
       @tmpdir11 = @tmpdir1 + "nonelink"
-      @tmpfile1 = Tempfile.new
-      @tmpfile2 = Tempfile.new
+      @tmpfile1 = Tempfile.new "f"
+      @tmpfile2 = Tempfile.new "f"
       @tmpfile3 = @tmpfile2.path + "link"
       system "mount -t tmpfs tmpfs #{@tmpdir1}"
       system "mount --bind #{@tmpdir3} #{@tmpdir4}"
