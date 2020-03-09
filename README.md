@@ -37,8 +37,10 @@ The basic usage is as follows.
 ```ruby
 require "hrr_rb_mount"
 
-HrrRbMount.mount "tmpfs", "/path/to/target", "tmpfs", HrrRbMount::NOEXEC, "size=1M" # => 0
-HrrRbMount.umount "/path/to/target"                                                 # => 0
+flags = HrrRbMount::NOEXEC
+HrrRbMount.mount "tmpfs", "/path/to/target", "tmpfs", flags, "size=1M" # => 0
+HrrRbMount.mountpoint? "/path/to/target"                               # => true
+HrrRbMount.umount "/path/to/target"                                    # => 0
 ```
 
 ## Development
