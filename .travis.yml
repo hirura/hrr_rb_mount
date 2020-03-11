@@ -23,8 +23,8 @@ before_install:
 install:
   - bundle install
 before_script:
-  - sudo env RBENV_VERSION="${RBENV_VERSION}" PATH="${RBENV_ROOT}/shims:${RBENV_ROOT}/bin:${PATH}" bundle exec rake clean clobber
+  - sudo env RBENV_VERSION="${RBENV_VERSION}" PATH="${RBENV_ROOT}/shims:${RBENV_ROOT}/bin:${PATH}" bundle exec rake clean
 script:
   - sudo env RBENV_VERSION="${RBENV_VERSION}" PATH="${RBENV_ROOT}/shims:${RBENV_ROOT}/bin:${PATH}" bundle exec rake compile spec
 after_script:
-  - sudo env RBENV_VERSION="${RBENV_VERSION}" PATH="${RBENV_ROOT}/shims:${RBENV_ROOT}/bin:${PATH}" bundle exec rake clean clobber
+  - sudo env RBENV_VERSION="${RBENV_VERSION}" PATH="${RBENV_ROOT}/shims:${RBENV_ROOT}/bin:${PATH}" bundle exec rake clean
