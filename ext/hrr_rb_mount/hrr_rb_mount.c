@@ -7,7 +7,7 @@ VALUE rb_mHrrRbMountConst;
 /*
  * A wrapper around mount system call.
  *
- * == Synopsis:
+ * @example
  *   HrrRbMount.mount "source", "target", "filesystemtype", mountflags, "data" # => 0
  *
  * @overload mount(source, target, filesystemtype, mountflags=0, data="") => 0
@@ -42,7 +42,7 @@ hrr_rb_mount_mount(int argc, VALUE *argv, VALUE self)
 /*
  * A wrapper around umount system call.
  *
- * == Synopsis:
+ * @example
  *   HrrRbMount.umount "target", flags # => 0
  *
  * @overload umount(target, flags=0) => 0
