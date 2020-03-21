@@ -21,85 +21,100 @@ RSpec.describe HrrRbMount do
 
   describe ".mount" do
     before :example do
-      @tmpdir = Dir.mktmpdir
+      @tmpdir1 = Dir.mktmpdir
+      @tmpdir2 = Dir.mktmpdir
     end
 
     after :example do
-      system "mountpoint -q #{@tmpdir} && umount #{@tmpdir}"
-      FileUtils.remove_entry @tmpdir
+      system "mountpoint -q #{@tmpdir1} && umount #{@tmpdir1}"
+      system "mountpoint -q #{@tmpdir2} && umount #{@tmpdir2}"
+      FileUtils.remove_entry @tmpdir1
+      FileUtils.remove_entry @tmpdir2
     end
 
     it "raises an ArgumentError when takes 2 args" do
-      expect{ HrrRbMount.mount "tmpfs", @tmpdir }.to raise_error ArgumentError
+      expect{ HrrRbMount.mount "tmpfs", @tmpdir1 }.to raise_error ArgumentError
     end
 
     it "takes 3 args" do
-      expect( HrrRbMount.mount "tmpfs", @tmpdir, "tmpfs" ).to eq 0
+      expect( HrrRbMount.mount "tmpfs", @tmpdir1, "tmpfs" ).to eq 0
     end
 
     it "takes 4 args" do
-      expect( HrrRbMount.mount "tmpfs", @tmpdir, "tmpfs", 0 ).to eq 0
+      expect( HrrRbMount.mount "tmpfs", @tmpdir1, "tmpfs", 0 ).to eq 0
     end
 
     it "takes 5 args" do
-      expect( HrrRbMount.mount "tmpfs", @tmpdir, "tmpfs", 0, "" ).to eq 0
+      expect( HrrRbMount.mount "tmpfs", @tmpdir1, "tmpfs", 0, "" ).to eq 0
     end
 
     it "raises an ArgumentError when takes 6 args" do
-      expect{ HrrRbMount.mount "tmpfs", @tmpdir, "tmpfs", 0, "", "dummy" }.to raise_error ArgumentError
+      expect{ HrrRbMount.mount "tmpfs", @tmpdir1, "tmpfs", 0, "", "dummy" }.to raise_error ArgumentError
     end
 
     context "when filesystemtype is tmpfs" do
       let(:source){ "tmpfs" }
-      let(:target){ @tmpdir }
+      let(:target){ @tmpdir1 }
       let(:filesystemtype){ "tmpfs" }
 
       it "mounts tmpfs" do
         expect( HrrRbMount.mount source, target, filesystemtype ).to eq 0
-        expect(system "mountpoint -q #{@tmpdir}").to be true
+        expect(system "mountpoint -q #{@tmpdir1}").to be true
       end
     end
 
     context "when flags are specified" do
       let(:source){ "tmpfs" }
-      let(:target){ @tmpdir }
+      let(:target){ @tmpdir1 }
       let(:filesystemtype){ "tmpfs" }
       let(:flags){ HrrRbMount::Constants::NOEXEC | HrrRbMount::Constants::RDONLY }
 
       it "mounts following the flags" do
         expect( HrrRbMount.mount source, target, filesystemtype, flags ).to eq 0
-        expect(system "mountpoint -q #{@tmpdir}").to be true
-        expect(system "touch #{File.join(@tmpdir, "test")} >/dev/null 2>&1").to be false
+        expect(system "mountpoint -q #{@tmpdir1}").to be true
+        expect(system "touch #{File.join(@tmpdir1, "test")} >/dev/null 2>&1").to be false
       end
     end
 
     context "when data is specified" do
       let(:source){ "tmpfs" }
-      let(:target){ @tmpdir }
+      let(:target){ @tmpdir1 }
       let(:filesystemtype){ "tmpfs" }
       let(:flags){ 0 }
       let(:data){ "size=100k" }
 
       it "mounts following the data" do
         expect( HrrRbMount.mount source, target, filesystemtype, flags, data ).to eq 0
-        expect(system "mountpoint -q #{@tmpdir}").to be true
-        expect(system "dd if=/dev/zero of=#{File.join(@tmpdir, "test")} bs=100k count=101 >/dev/null 2>&1").to be false
+        expect(system "mountpoint -q #{@tmpdir1}").to be true
+        expect(system "dd if=/dev/zero of=#{File.join(@tmpdir1, "test")} bs=100k count=101 >/dev/null 2>&1").to be false
       end
     end
 
     context "when flags and data are specified" do
       let(:source){ "tmpfs" }
-      let(:target){ @tmpdir }
+      let(:target){ @tmpdir1 }
       let(:filesystemtype){ "tmpfs" }
       let(:flags){ HrrRbMount::Constants::NOEXEC }
       let(:data){ "size=100k" }
 
       it "mounts following the flags and the data" do
         expect( HrrRbMount.mount source, target, filesystemtype, flags, data ).to eq 0
-        expect(system "mountpoint -q #{@tmpdir}").to be true
-        expect(system "touch #{File.join(@tmpdir, "test")} >/dev/null 2>&1").to be true
-        expect(system "chmod +x #{File.join(@tmpdir, "test")} >/dev/null 2>&1").to be true
-        expect(system "#{File.join(@tmpdir, "test")} >/dev/null 2>&1").to be false
+        expect(system "mountpoint -q #{@tmpdir1}").to be true
+        expect(system "touch #{File.join(@tmpdir1, "test")} >/dev/null 2>&1").to be true
+        expect(system "chmod +x #{File.join(@tmpdir1, "test")} >/dev/null 2>&1").to be true
+        expect(system "#{File.join(@tmpdir1, "test")} >/dev/null 2>&1").to be false
+      end
+    end
+
+    context "when filesystemtype is nil and the flag is the type that ignores it" do
+      let(:source){ @tmpdir2 }
+      let(:target){ @tmpdir1 }
+      let(:filesystemtype){ nil }
+      let(:flags){ HrrRbMount::Constants::BIND }
+
+      it "mounts ignoring the filesystemtype and following the option" do
+        expect( HrrRbMount.mount source, target, filesystemtype, flags ).to eq 0
+        expect(system "mountpoint -q #{@tmpdir1}").to be true
       end
     end
   end

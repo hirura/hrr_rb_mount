@@ -29,7 +29,7 @@ hrr_rb_mount_mount(int argc, VALUE *argv, VALUE self)
 
   source         = StringValueCStr(argv[0]);
   target         = StringValueCStr(argv[1]);
-  filesystemtype = StringValueCStr(argv[2]);
+  filesystemtype = NIL_P(argv[2]) ? NULL : StringValueCStr(argv[2]);
   mountflags     = argc < 4 ? 0 : NUM2ULONG(argv[3]);
   data           = argc < 5 ? "" : StringValueCStr(argv[4]);
 
