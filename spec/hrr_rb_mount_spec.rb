@@ -152,6 +152,165 @@ RSpec.describe HrrRbMount do
     end
   end
 
+  describe ".remount" do
+    let(:mountpoint){ "dummy mountpoint" }
+
+    context "when flags and data are not specified" do
+      it "calls .mount with \"none\" source, mountpoint target, nil filesystemtype, and REMOUNT flag" do
+        expect( HrrRbMount ).to receive(:mount).with("none", mountpoint, nil, HrrRbMount::Constants::REMOUNT, "").and_return(0).once
+        expect( HrrRbMount.remount mountpoint ).to eq 0
+      end
+    end
+
+    context "when flags and data are specified" do
+      let(:flags){ HrrRbMount::Constants::RDONLY }
+      let(:data){ "dummy data" }
+
+      it "calls .mount with \"none\" source, mountpoint target, nil filesystemtype, REMOUNT flag, and specified flags and data" do
+        expect( HrrRbMount ).to receive(:mount).with("none", mountpoint, nil, HrrRbMount::Constants::REMOUNT | flags, data).and_return(0).once
+        expect( HrrRbMount.remount mountpoint, flags, data ).to eq 0
+      end
+    end
+  end
+
+  describe ".move" do
+    let(:source){ "dummy source" }
+    let(:target){ "dummy target" }
+
+    context "when flags and data are not specified" do
+      it "calls .mount with source, target, nil filesystemtype, and MOVE flag" do
+        expect( HrrRbMount ).to receive(:mount).with(source, target, nil, HrrRbMount::Constants::MOVE, "").and_return(0).once
+        expect( HrrRbMount.move source, target ).to eq 0
+      end
+    end
+
+    context "when flags and data are specified" do
+      let(:flags){ HrrRbMount::Constants::RDONLY }
+      let(:data){ "dummy data" }
+
+      it "calls .mount with source, target, nil filesystemtype, MOVE flag, and specified flags and data" do
+        expect( HrrRbMount ).to receive(:mount).with(source, target, nil, HrrRbMount::Constants::MOVE | flags, data).and_return(0).once
+        expect( HrrRbMount.move source, target, flags, data ).to eq 0
+      end
+    end
+  end
+
+  describe ".bind" do
+    let(:source){ "dummy source" }
+    let(:target){ "dummy target" }
+
+    context "when flags and data are not specified" do
+      it "calls .mount with source, target, nil filesystemtype, and BIND flag" do
+        expect( HrrRbMount ).to receive(:mount).with(source, target, nil, HrrRbMount::Constants::BIND, "").and_return(0).once
+        expect( HrrRbMount.bind source, target ).to eq 0
+      end
+    end
+
+    context "when flags and data are specified" do
+      let(:flags){ HrrRbMount::Constants::RDONLY }
+      let(:data){ "dummy data" }
+
+      it "calls .mount with source, target, nil filesystemtype, BIND flag, and specified flags and data" do
+        expect( HrrRbMount ).to receive(:mount).with(source, target, nil, HrrRbMount::Constants::BIND | flags, data).and_return(0).once
+        expect( HrrRbMount.bind source, target, flags, data ).to eq 0
+      end
+    end
+  end
+
+  describe ".rbind" do
+    let(:source){ "dummy source" }
+    let(:target){ "dummy target" }
+
+    context "when flags and data are not specified" do
+      it "calls .mount with source, target, nil filesystemtype, and BIND | REC flags" do
+        expect( HrrRbMount ).to receive(:mount).with(source, target, nil, HrrRbMount::Constants::BIND | HrrRbMount::Constants::REC, "").and_return(0).once
+        expect( HrrRbMount.rbind source, target ).to eq 0
+      end
+    end
+
+    context "when flags and data are specified" do
+      let(:flags){ HrrRbMount::Constants::RDONLY }
+      let(:data){ "dummy data" }
+
+      it "calls .mount with source, target, nil filesystemtype, BIND | REC flags, and specified flags and data" do
+        expect( HrrRbMount ).to receive(:mount).with(source, target, nil, HrrRbMount::Constants::BIND | HrrRbMount::Constants::REC | flags, data).and_return(0).once
+        expect( HrrRbMount.rbind source, target, flags, data ).to eq 0
+      end
+    end
+  end
+
+  describe ".make_shared" do
+    let(:mountpoint){ "dummy mountpoint" }
+
+    it "calls .mount with \"none\" source, mountpoint target, nil filesystemtype, and SHARED flag" do
+      expect( HrrRbMount ).to receive(:mount).with("none", mountpoint, nil, HrrRbMount::Constants::SHARED).and_return(0).once
+      expect( HrrRbMount.make_shared mountpoint ).to eq 0
+    end
+  end
+
+  describe ".make_slave" do
+    let(:mountpoint){ "dummy mountpoint" }
+
+    it "calls .mount with \"none\" source, mountpoint target, nil filesystemtype, and SLAVE flag" do
+      expect( HrrRbMount ).to receive(:mount).with("none", mountpoint, nil, HrrRbMount::Constants::SLAVE).and_return(0).once
+      expect( HrrRbMount.make_slave mountpoint ).to eq 0
+    end
+  end
+
+  describe ".make_private" do
+    let(:mountpoint){ "dummy mountpoint" }
+
+    it "calls .mount with \"none\" source, mountpoint target, nil filesystemtype, and PRIVATE flag" do
+      expect( HrrRbMount ).to receive(:mount).with("none", mountpoint, nil, HrrRbMount::Constants::PRIVATE).and_return(0).once
+      expect( HrrRbMount.make_private mountpoint ).to eq 0
+    end
+  end
+
+  describe ".make_unbindable" do
+    let(:mountpoint){ "dummy mountpoint" }
+
+    it "calls .mount with \"none\" source, mountpoint target, nil filesystemtype, and UNBINDABLE flag" do
+      expect( HrrRbMount ).to receive(:mount).with("none", mountpoint, nil, HrrRbMount::Constants::UNBINDABLE).and_return(0).once
+      expect( HrrRbMount.make_unbindable mountpoint ).to eq 0
+    end
+  end
+
+  describe ".make_rshared" do
+    let(:mountpoint){ "dummy mountpoint" }
+
+    it "calls .mount with \"none\" source, mountpoint target, nil filesystemtype, and REC | SHARED flags" do
+      expect( HrrRbMount ).to receive(:mount).with("none", mountpoint, nil, HrrRbMount::Constants::REC | HrrRbMount::Constants::SHARED).and_return(0).once
+      expect( HrrRbMount.make_rshared mountpoint ).to eq 0
+    end
+  end
+
+  describe ".make_rslave" do
+    let(:mountpoint){ "dummy mountpoint" }
+
+    it "calls .mount with \"none\" source, mountpoint target, nil filesystemtype, and REC | SLAVE flags" do
+      expect( HrrRbMount ).to receive(:mount).with("none", mountpoint, nil, HrrRbMount::Constants::REC | HrrRbMount::Constants::SLAVE).and_return(0).once
+      expect( HrrRbMount.make_rslave mountpoint ).to eq 0
+    end
+  end
+
+  describe ".make_rprivate" do
+    let(:mountpoint){ "dummy mountpoint" }
+
+    it "calls .mount with \"none\" source, mountpoint target, nil filesystemtype, and REC | PRIVATE flags" do
+      expect( HrrRbMount ).to receive(:mount).with("none", mountpoint, nil, HrrRbMount::Constants::REC | HrrRbMount::Constants::PRIVATE).and_return(0).once
+      expect( HrrRbMount.make_rprivate mountpoint ).to eq 0
+    end
+  end
+
+  describe ".make_runbindable" do
+    let(:mountpoint){ "dummy mountpoint" }
+
+    it "calls .mount with \"none\" source, mountpoint target, nil filesystemtype, and REC | UNBINDABLE flags" do
+      expect( HrrRbMount ).to receive(:mount).with("none", mountpoint, nil, HrrRbMount::Constants::REC | HrrRbMount::Constants::UNBINDABLE).and_return(0).once
+      expect( HrrRbMount.make_runbindable mountpoint ).to eq 0
+    end
+  end
+
   describe ".mountpoint?" do
     before :context do
       @tmpdir1  = Dir.mktmpdir
