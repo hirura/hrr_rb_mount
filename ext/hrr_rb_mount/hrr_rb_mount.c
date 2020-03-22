@@ -31,7 +31,7 @@ hrr_rb_mount_mount(int argc, VALUE *argv, VALUE self)
   target         = StringValueCStr(argv[1]);
   filesystemtype = NIL_P(argv[2]) ? NULL : StringValueCStr(argv[2]);
   mountflags     = argc < 4 ? 0 : NUM2ULONG(argv[3]);
-  data           = argc < 5 ? "" : StringValueCStr(argv[4]);
+  data           = argc < 5 ? NULL : StringValueCStr(argv[4]);
 
   if (mount(source, target, filesystemtype, mountflags, data) < 0)
     rb_sys_fail("mount");
