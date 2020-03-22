@@ -41,6 +41,10 @@ flags = HrrRbMount::NOEXEC
 HrrRbMount.mount "tmpfs", "/path/to/target", "tmpfs", flags, "size=1M" # => 0
 HrrRbMount.mountpoint? "/path/to/target"                               # => true
 HrrRbMount.umount "/path/to/target"                                    # => 0
+
+HrrRbMount.bind "/path/to/source", "/path/to/target" # => 0
+HrrRbMount.make_private "/path/to/target"            # => 0
+HrrRbMount.remount "/path/to/target", flags          # => 0
 ```
 
 ## Development
