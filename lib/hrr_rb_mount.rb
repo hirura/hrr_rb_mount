@@ -3,7 +3,7 @@ require "hrr_rb_mount/hrr_rb_mount"
 
 # A wrapper around mount and umount. See mount(2) and umount(2) for details.
 #
-# == Synopsis:
+# @example
 #   require "hrr_rb_mount"
 #
 #   flags = HrrRbMount::NOEXEC
@@ -182,7 +182,7 @@ module HrrRbMount
   # When the file is not available, then uses stat(2).
   # In this case, bind mount is not able to be detected.
   #
-  # == Synopsis:
+  # @example
   #   HrrRbMount.mountpoint? "/proc"   # => true
   #   HrrRbMount.mountpoint? "/proc/1" # => false
   #
